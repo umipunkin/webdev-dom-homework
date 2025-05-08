@@ -10,16 +10,26 @@
     <div class="container">
       <ul id="listComments" class="comments"></ul>
       <div class="add-form">
-        <input type="text" class="add-form-name" placeholder="Введите ваше имя" id="input"/>
-        <textarea id="textArea" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
+        <input
+          type="text"
+          class="add-form-name"
+          placeholder="Введите ваше имя"
+          id="input"
+        />
+        <textarea
+          id="textArea"
+          type="textarea"
+          class="add-form-text"
+          placeholder="Введите ваш коментарий"
+          rows="4"
+        ></textarea>
         <div class="add-form-row">
           <button id="button" class="add-form-button">Написать</button>
         </div>
       </div>
     </div>
-  
-    <script>
 
+    <script>
       const commentsData = [
         {
           id: 1,
@@ -27,7 +37,7 @@
           date: "12.02.22 12:18",
           text: "Это будет первый комментарий на этой странице",
           isLiked: false,
-          likesCount: 3
+          likesCount: 3,
         },
         {
           id: 2,
@@ -35,19 +45,20 @@
           date: "13.02.22 19:22",
           text: "Мне нравится как оформлена эта страница! ❤",
           isLiked: true,
-          likesCount: 75
-        }
+          likesCount: 75,
+        },
       ];
-  
+
+
       const renderComments = () => {
-        const commentsList = document.getElementById('listComments');
-        commentsList.innerHTML = '';
-  
-        commentsData.forEach(comment => {
-          const commentElement = document.createElement('li');
-          commentElement.className = 'comment';
+        const commentsList = document.getElementById("listComments");
+        commentsList.innerHTML = "";
+
+        commentsData.forEach((comment) => {
+          const commentElement = document.createElement("li");
+          commentElement.className = "comment";
           commentElement.dataset.id = comment.id;
-  
+
           commentElement.innerHTML = `
             <div class="comment-header">
               <div>${comment.name}</div>
@@ -59,61 +70,84 @@
             <div class="comment-footer">
               <div class="likes">
                 <span class="likes-counter">${comment.likesCount}</span>
-                <button class="like-button ${comment.isLiked ? '-active-like' : ''}"></button>
+                <button class="like-button ${
+                  comment.isLiked ? "-active-like" : ""
+                }"></button>
               </div>
             </div>
           `;
-  
+
           commentsList.appendChild(commentElement);
         });
-  
-        document.querySelectorAll('.like-button').forEach(button => {
-          button.addEventListener('click', function() {
-            const commentId = parseInt(this.closest('.comment').dataset.id);
+
+        document.querySelectorAll(".like-button").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const commentId = parseInt(this.closest(".comment").dataset.id);
             toggleLike(commentId);
           });
         });
-      }
+
+        document.querySelectorAll(".comment").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const commentId = parseInt(button.dataset.id);
+            setCurrentComment(commentId);
+            console.log(button);
+          });
+        });
+      };
 
       const toggleLike = (commentId) => {
-        const comment = commentsData.find(c => c.id === commentId);
+        const comment = commentsData.find((c) => c.id === commentId);
         if (comment) {
           comment.isLiked = !comment.isLiked;
           comment.likesCount += comment.isLiked ? 1 : -1;
           renderComments();
         }
-      }
-  
-      document.getElementById('button').addEventListener('click', () => {
-        const name = document.getElementById('input').value.trim();
-        const commentText = document.getElementById('textArea').value.trim();
-  
-        if (name === '' || commentText === '') {
-          alert('Пожалуйста, заполните все поля!');
+      };
+
+      document.getElementById("button").addEventListener("click", () => {
+        const name = document.getElementById("input").value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        const commentText = document.getElementById("textArea").value.trim().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+        if (name === "" || commentText === "") {
+          alert("Пожалуйста, заполните все поля!");
           return;
         }
-  
+
         const now = new Date();
-        const date = now.toLocaleDateString('ru-RU');
-        const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-  
+        const date = now.toLocaleDateString("ru-RU");
+        const time = now.toLocaleTimeString("ru-RU", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
         const newComment = {
           id: Date.now(),
           name: name,
           date: `${date} ${time}`,
           text: commentText,
           isLiked: false,
-          likesCount: 0
+          likesCount: 0,
         };
-  
+
         commentsData.push(newComment);
         renderComments();
-  
-        document.getElementById('input').value = '';
-        document.getElementById('textArea').value = '';
+
+        document.getElementById("input").value = "";
+        document.getElementById("textArea").value = "";
       });
-  
+
+      const setCurrentComment = (currentId) => {
+        const comment = commentsData.find(({ id }) => id === currentId);
+
+        const quoteElement = `"${comment.name} \n ${comment.text}"\n\n`;
+        document.getElementById("input").value = "";
+        document.getElementById("textArea").value = quoteElement;
+      };
+
       renderComments();
     </script>
   </body>
-  </html>
+</html>

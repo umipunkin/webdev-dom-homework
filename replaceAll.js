@@ -1,7 +1,5 @@
-import { renderComments } from "./renderComments.js";
-import { commentsData } from "./comentsData.js";
-
-
+import { renderComments } from './renderComments.js'
+import { setCommentsData } from './commentsData.js'
 
 document.getElementById('button').addEventListener('click', () => {
     const name = document
@@ -20,25 +18,26 @@ document.getElementById('button').addEventListener('click', () => {
         return
     }
 
-    const now = new Date()
-    const date = now.toLocaleDateString('ru-RU')
-    const time = now.toLocaleTimeString('ru-RU', {
-        hour: '2-digit',
-        minute: '2-digit',
-    })
 
-      const newComment = {
-        id: Date.now(),
+    const newComment = {
         name: name,
-        date: `${date} ${time}`,
         text: commentText,
-        isLiked: false,
-        likesCount: 0,
     }
 
-    commentsData.push(newComment)
-    renderComments()
+
 
     document.getElementById('input').value = ''
     document.getElementById('textArea').value = ''
+
+    fetch('https://wedev-api.sky.pro/api/v1/umipunkin/comments', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+    }).then(() => {
+        fetch('https://wedev-api.sky.pro/api/v1/umipunkin/comments')
+            .then((res) => res.json())
+            .then((data) => {
+                setCommentsData(data.comments)
+                renderComments()
+            })
+    })
 })

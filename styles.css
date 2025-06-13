@@ -155,7 +155,7 @@ body {
 }
 
 #loader {
-  position: fixed;
+  position: absolute;
   top: 20px;
   left: 0;
   width: 100%;
@@ -168,6 +168,7 @@ body {
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  flex-wrap: nowrap;
   z-index: 9999;
 }
 
@@ -189,5 +190,6 @@ body {
 .loader-text {
   font-family: inherit;
   font-size: 24px;
-  color: #bcec30;
+  color: #ffffff;
+  margin-bottom: 10px;
 }

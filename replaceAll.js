@@ -1,5 +1,6 @@
 import { fetchRenderComments } from './fetchRenderComments.js'
 
+
 document.getElementById('button').addEventListener('click', () => {
     const name = document
         .getElementById('input')
@@ -29,8 +30,8 @@ document.getElementById('button').addEventListener('click', () => {
     document.getElementById('input').value = ''
     document.getElementById('textArea').value = ''
 
-    button.disabled = true
-    button.textContent = "Отправка комментария..."
+    document.getElementById('button').disabled = true
+    document.getElementById('button').textContent = "Отправка комментария..."
 
     fetch('https://wedev-api.sky.pro/api/v1/umipunkin/comments', {
         method: 'POST',
@@ -39,8 +40,8 @@ document.getElementById('button').addEventListener('click', () => {
         return fetchRenderComments()
             .then(() => {
 
-                    button.disabled = false
-                    button.textContent = "Написать"
+                document.getElementById('button').disabled = false
+                document.getElementById('button').textContent = "Написать"
             })
     })
 })

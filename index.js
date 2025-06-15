@@ -1,8 +1,3 @@
+import { fetchRenderComments } from './fetchRenderComments.js'
 
-import { fetchRenderComments } from "./fetchRenderComments.js";
-
-document.getElementById('loader').style.display = 'block';
-
-
-fetchRenderComments();
-
+fetchRenderComments()

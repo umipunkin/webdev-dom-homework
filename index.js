@@ -1,9 +1,3 @@
-import { setCommentsData } from "./commentsData.js";
-import {renderComments} from "./renderComments.js";
-renderComments();
+import { fetchRenderComments } from './fetchRenderComments.js'
 
-fetch('https://wedev-api.sky.pro/api/v1/umipunkin/comments').then(response => response.json()).then(data => {
-    setCommentsData(data.comments)
-    renderComments();
-})
-
+fetchRenderComments()

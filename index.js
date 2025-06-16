@@ -1,3 +1,7 @@
 import { fetchRenderComments } from './fetchRenderComments.js'
+import { initFormListeners } from './initListeners.js'
 
-fetchRenderComments()
+document.addEventListener('DOMContentLoaded', () =>{
+    fetchRenderComments();
+    initFormListeners()
+})

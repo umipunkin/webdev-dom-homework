@@ -2,6 +2,7 @@ import { renderComments } from './renderComments.js'
 import { commentsData } from './commentsData.js'
 import { fetchRenderComments } from './fetchRenderComments.js'
 import { replaceAll } from './replaceAll.js'
+import { createComment } from './api.js'
 
 export const toggleLike = (commentId) => {
     const comment = commentsData.find((c) => c.id === commentId)
@@ -20,41 +21,39 @@ export const setCurrentComment = (currentId) => {
     document.getElementById('textArea').value = quoteElement
 }
 
-const sendCommentButton = document.getElementById('sendButton')
-const inputElement = document.getElementById('input')
-const commentFieldElement = document.getElementById('textArea')
+export const initFormListeners = () => {
+    const sendCommentButton = document.getElementById('sendButton')
+    const inputElement = document.getElementById('input')
+    const commentFieldElement = document.getElementById('textArea')
 
-sendCommentButton.addEventListener('click', () => {
-    const name = replaceAll(inputElement.value)
-    const commentText = replaceAll(commentFieldElement.value)
+    sendCommentButton.addEventListener('click', () => {
+        const name = replaceAll(inputElement.value)
+        const commentText = replaceAll(commentFieldElement.value)
 
-    if (name === '' || commentText === '') {
-        alert('Пожалуйста, заполните все поля!')
-        return
-    }
+        if (name === '' || commentText === '') {
+            alert('Пожалуйста, заполните все поля!')
+            return
+        }
 
-    const newComment = {
-        name: name,
-        text: commentText,
-    }
+        const newComment = {
+            name: name,
+            text: commentText,
+        }
 
-    sendCommentButton.setAttribute('disabled', true)
-    sendCommentButton.textContent = 'Отправка комментария...'
+        sendCommentButton.setAttribute('disabled', true)
+        sendCommentButton.textContent = 'Отправка комментария...'
 
-    fetch('https://wedev-api.sky.pro/api/v1/umipunkin/comments', {
-        method: 'POST',
-        body: JSON.stringify(newComment),
-    })
-        .then(() => {
-            inputElement.value = ''
-            commentFieldElement.value = ''
+            createComment(newComment)
 
-            return fetchRenderComments().then((res) => {
-                console.log(res)
+            .then(() => {
+                inputElement.value = ''
+                commentFieldElement.value = ''
+
+                return fetchRenderComments()
             })
-        })
-        .finally(() => {
-            sendCommentButton.removeAttribute('disabled')
-            sendCommentButton.textContent = 'Написать'
-        })
-})
+            .finally(() => {
+                sendCommentButton.removeAttribute('disabled')
+                sendCommentButton.textContent = 'Написать'
+            })
+    })
+}

@@ -7,6 +7,13 @@
     </head>
 
     <body>
+        <div id="loader">
+            <div class="spinner"></div>
+            <div class="loader-text">
+                Пожалуйста подождите, комментарии загружаются...
+            </div>
+        </div>
+
         <div class="container">
             <ul id="listComments" class="comments"></ul>
             <div class="add-form">
@@ -24,14 +31,13 @@
                     rows="4"
                 ></textarea>
                 <div class="add-form-row">
-                    <button id="button" class="add-form-button">
+                    <button id="sendButton" class="add-form-button">
                         Написать
                     </button>
                 </div>
             </div>
         </div>
 
-        <script type="module" src="./index.js">
-        </script>
+        <script type="module" src="./index.js"></script>
     </body>
 </html>

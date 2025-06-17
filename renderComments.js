@@ -1,6 +1,5 @@
 import { commentsData } from './commentsData.js'
 import { toggleLike, setCurrentComment } from './initListeners.js'
-import {} from './replaceAll.js'
 
 export const renderComments = () => {
     const commentsList = document.getElementById('listComments')
@@ -55,3 +54,5 @@ export const renderComments = () => {
         })
     })
 }
+
+

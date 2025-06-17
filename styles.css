@@ -201,3 +201,8 @@ body {
   color: #ffffff;
   margin-bottom: 10px;
 }
+
+
+.-error {
+  color: 1px solid red;
+}

@@ -11,4 +11,5 @@ export const fetchRenderComments = () => {
             setCommentsData(data.comments)
             renderComments()
         })
+
 }

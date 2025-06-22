@@ -129,13 +129,19 @@ body {
 
 .add-form-name {
   width: 300px;
+  border: 1px solid transparent;
   padding: 11px 22px;
+
+  transition: border-color .3s ease-in-out, color .3s ease-in-out;
 }
 
 .add-form-text {
   margin-top: 12px;
   padding: 22px;
   resize: none;
+  border: 1px solid transparent;
+
+  transition: border-color .3s ease-in-out, color .3s ease-in-out;
 }
 
 .add-form-row {
@@ -204,5 +210,6 @@ body {
 
 
 .-error {
-  color: 1px solid red;
+  color: #f00;
+  border-color: #f00;
 }

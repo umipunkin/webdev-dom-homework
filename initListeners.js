@@ -44,17 +44,6 @@ export const initFormListeners = () => {
         sendCommentButton.textContent = 'Отправка комментария...'
 
         createComment(newComment)
-        .then((response) => {
-            if (response.status === 500) {
-                throw new Error('Ошибка сервера')
-            }
-            if (response.status === 400) {
-                throw new Error('Неверный запрос')
-            }
-            if (response.status === 201) {
-                return response.json()
-            }
-        })
             .then(() => {
                 inputElement.value = ''
                 commentFieldElement.value = ''
@@ -62,30 +51,14 @@ export const initFormListeners = () => {
                 return fetchRenderComments()
             })
             .catch((error) => {
+                console.log(error)
+                inputElement.classList.add('-error')
+                commentFieldElement.classList.add('-error')
 
-                if (error.message === 'Failed to fetch') {
-                    alert('Нет интернета, попробуйте снова')}
-
-                if (error.message === 'Ошибка сервера') {
-                    alert('Ошибка сервера')}
-
-                if (error.message === 'Неверный запрос') {
-                    if (inputElement.value.length < 3) {
-                        alert('Имя и комментарий должны быть не короче 3-х символов')
-                    }  
-                    
-
-                    inputElement.classList.add('-error')
-                    commentFieldElement.classList.add('-error')
-
-                    setTimeout(() =>{
-                        inputElement.classList.remove('-error')
-                        commentFieldElement.classList.remove('-error')
-                    }, 2000)
-
-
-
-                }
+                setTimeout(() => {
+                    inputElement.classList.remove('-error')
+                    commentFieldElement.classList.remove('-error')
+                }, 2000)
             })
             .finally(() => {
                 sendCommentButton.removeAttribute('disabled')

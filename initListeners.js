@@ -43,13 +43,22 @@ export const initFormListeners = () => {
         sendCommentButton.setAttribute('disabled', true)
         sendCommentButton.textContent = 'Отправка комментария...'
 
-            createComment(newComment)
-
+        createComment(newComment)
             .then(() => {
                 inputElement.value = ''
                 commentFieldElement.value = ''
 
                 return fetchRenderComments()
+            })
+            .catch((error) => {
+                console.log(error)
+                inputElement.classList.add('-error')
+                commentFieldElement.classList.add('-error')
+
+                setTimeout(() => {
+                    inputElement.classList.remove('-error')
+                    commentFieldElement.classList.remove('-error')
+                }, 2000)
             })
             .finally(() => {
                 sendCommentButton.removeAttribute('disabled')

@@ -26,7 +26,7 @@ export const initFormListeners = () => {
     const inputElement = document.getElementById('input')
     const commentFieldElement = document.getElementById('textArea')
 
-    sendCommentButton.addEventListener('click', () => {
+    sendCommentButton?.addEventListener('click', () => {
         const name = replaceAll(inputElement.value)
         const commentText = replaceAll(commentFieldElement.value)
 

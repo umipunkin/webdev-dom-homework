@@ -12,6 +12,7 @@ body {
   padding-bottom: 200px;
   background: #202020;
   min-height: 100vh;
+  gap: 6px;
 }
 
 .comments,
@@ -212,4 +213,46 @@ body {
 .-error {
   color: #f00;
   border-color: #f00;
+}
+
+
+.show-login-form {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.login-form>.add-form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-items: center;
+  gap: 16px;
+}
+
+.add-form-row>a {
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form>.add-form-name {
+  flex-grow: 1;
+  width: auto;
+}
+
+.login-form>button {
+  width: auto;
+}
+
+#listComments {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
